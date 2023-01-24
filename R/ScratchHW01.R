@@ -1,5 +1,7 @@
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load(ggplot2,dplyr,patchwork,rnoaa,dplyr,hstr)
+system("git config --global user.email 'tylersmith22@vt.edu' ") 
+system("git config --global user.name 'tyler-26-smith' ")
 
 coeff <- 10
 
@@ -57,15 +59,17 @@ temperatureColor <- "#69b3a2"
     limit = NULL
   )
   
-  USC00440327
+ ##USC00440327
   WXData=meteo_pull_monitors(
-    monitors="USC00440327",    # replace the *** with index you find
+    monitors=stns[25,1],    # replace the *** with index you find
     keep_flags = FALSE,
-    date_min = "2000-01-01",
+    date_min = "2016-01-01",
     date_max = NULL,
-    var = c("TMAX","TMIN","PRCP") 
+    var = c("TMAX","TMIN","PRCP")
+    
   )
   
   plot(WXData$date,WXData$tmax,type="l", col="red")
   lines(WXData$date,WXData$tmin,type="l", col="blue")
   points(WXData$date,WXData$prcp, col="black")
+  
