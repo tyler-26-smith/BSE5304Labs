@@ -71,4 +71,3 @@ system("git config --global user.name 'tyler-26-smith' ")
 plot(p1)
 plot(p2)
 plot(p1+p2)
-        
