@@ -177,7 +177,17 @@ if( ! grepl("~/src/TauDEM/bin",old_path)){
  # Pitremove
  system("mpiexec -n 16 pitremove -z mydem.tif -fel mydemfel.tif")
  fel=raster("mydemfel.tif")
- plot(fel)
+ plot(fel -z)
+ plot(bboxpts,add=T)
+ plot(pourpoint,add=T,col="red")
+ zoom((fel -z))
+ title(main=myflowgage$gagename, xlab="Longitude", ylab="Latitude")
+ basestr=format(Sys.time(),"/%Y%m%d%H%M")
+ filename=paste0(mypdfdir,basestr,"Lab02Fig02.pdf")
+ pdf(filename) 
+ dev.off()
+ print("file size")
+ print(file.size(filename))
  
  
  # D8 flow directions
@@ -360,7 +370,16 @@ if( ! grepl("~/src/TauDEM/bin",old_path)){
  # Pitremove
  system("mpiexec -n 16 pitremove -z sl_dem.tif -fel sldemfel.tif")
  fel_sl=raster("sldemfel.tif")
- plot(fel_sl -z)
+ plot(fel_sl)
  plot(sl_bboxpts,add=T)
  plot(sl_pourpoint,add=T,col="red")
+ zoom(fel_sl,ext=sl_zoom)
+ title(main="Stream Lab Fill", xlab="Longitude", ylab="Latitude")
+ basestr=format(Sys.time(),"/%Y%m%d%H%M")
+ filename=paste0(mypdfdir,basestr,"Lab02Fig03.pdf")
+ pdf(filename) 
+ dev.off()
+ print("file size")
+ print(file.size(filename))
+ print("I finished!")
  
