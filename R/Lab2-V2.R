@@ -175,7 +175,7 @@ if( ! grepl("~/src/TauDEM/bin",old_path)){
  plot(z)
  
  # Pitremove
- system("mpiexec -n 16 pitremove -z mydem.tif -fel mydemfel.tif")
+ system("mpiexec -n 2 pitremove -z mydem.tif -fel mydemfel.tif")
  fel=raster("mydemfel.tif")
  plot(fel -z)
  plot(bboxpts,add=T)
@@ -191,14 +191,14 @@ if( ! grepl("~/src/TauDEM/bin",old_path)){
  
  
  # D8 flow directions
- system("mpiexec -n 16 d8flowdir -p mydemp.tif -sd8 mydemsd8.tif -fel mydemfel.tif",show.output.on.console=F,invisible=F)
+ system("mpiexec -n 2 d8flowdir -p mydemp.tif -sd8 mydemsd8.tif -fel mydemfel.tif",show.output.on.console=F,invisible=F)
  p=raster("mydemp.tif")
  plot(p)
  sd8=raster("mydemsd8.tif")
  plot(sd8)
  
  # Contributing area
- system("mpiexec -n 16 aread8 -p mydemp.tif -ad8 mydemad8.tif")
+ system("mpiexec -n 2 aread8 -p mydemp.tif -ad8 mydemad8.tif")
  ad8=raster("mydemad8.tif")
  plot(log(ad8))
  zoom(log(ad8),ext=zoomext2)
@@ -206,13 +206,13 @@ if( ! grepl("~/src/TauDEM/bin",old_path)){
  
  
  # Grid Network 
- system("mpiexec -n 16 gridnet -p mydemp.tif -gord mydemgord.tif -plen mydemplen.tif -tlen mydemtlen.tif")
+ system("mpiexec -n 2 gridnet -p mydemp.tif -gord mydemgord.tif -plen mydemplen.tif -tlen mydemtlen.tif")
  gord=raster("mydemgord.tif")
  plot(gord)
  zoom(gord,ext=zoomext)
  
  # DInf flow directions
- system("mpiexec -n 16 dinfflowdir -ang mydemang.tif -slp mydemslp.tif -fel mydemfel.tif",show.output.on.console=F,invisible=F)
+ system("mpiexec -n 2 dinfflowdir -ang mydemang.tif -slp mydemslp.tif -fel mydemfel.tif",show.output.on.console=F,invisible=F)
  ang=raster("mydemang.tif")
  plot(ang)
  slp=raster("mydemslp.tif")
@@ -220,13 +220,13 @@ if( ! grepl("~/src/TauDEM/bin",old_path)){
  
  
  # Dinf contributing area
- system("mpiexec -n 16 areadinf -ang mydemang.tif -sca mydemsca.tif")
+ system("mpiexec -n 2 areadinf -ang mydemang.tif -sca mydemsca.tif")
  sca=raster("mydemsca.tif")
  plot(log(sca))
  zoom(log(sca))
  
  # Threshold
- system("mpiexec -n 16 threshold -ssa mydemad8.tif -src mydemsrc.tif -thresh 100")
+ system("mpiexec -n 2 threshold -ssa mydemad8.tif -src mydemsrc.tif -thresh 100")
  src=raster("mydemsrc.tif")
  plot(src)
  zoom(src)
@@ -238,7 +238,7 @@ if( ! grepl("~/src/TauDEM/bin",old_path)){
             driver="ESRI Shapefile", overwrite_layer=TRUE)
  
  # Move Outlets
- system("mpiexec -n 16 moveoutletstostrm -p mydemp.tif -src mydemsrc.tif -o approxoutlets.shp -om outlet.shp")
+ system("mpiexec -n 2 moveoutletstostrm -p mydemp.tif -src mydemsrc.tif -o approxoutlets.shp -om outlet.shp")
  
  approxpt=readOGR("approxoutlets.shp")
  plot(approxpt,add=T, col="blue")
@@ -257,20 +257,20 @@ if( ! grepl("~/src/TauDEM/bin",old_path)){
  
  
  # Contributing area upstream of outlet
- system("mpiexec -n 16 aread8 -p mydemp.tif -o outlet.shp -ad8 mydemssa.tif")
+ system("mpiexec -n 2 aread8 -p mydemp.tif -o outlet.shp -ad8 mydemssa.tif")
  ssa=raster("mydemssa.tif")
  plot(ssa) 
  zoom(ssa)
  
  
  # Threshold
- system("mpiexec -n 16 threshold -ssa mydemssa.tif -src mydemsrc1.tif -thresh 2000")
+ system("mpiexec -n 2 threshold -ssa mydemssa.tif -src mydemsrc1.tif -thresh 2000")
  src1=raster("mydemsrc1.tif")
  plot(src1)
  zoom(src1)
  
  # Stream Reach and Watershed
- system("mpiexec -n 16 streamnet -fel mydemfel.tif -p mydemp.tif -ad8 mydemad8.tif -src mydemsrc1.tif -o outlet.shp -ord mydemord.tif -tree mydemtree.txt -coord mydemcoord.txt -net mydemnet.shp -w mydemw.tif")
+ system("mpiexec -n 2 streamnet -fel mydemfel.tif -p mydemp.tif -ad8 mydemad8.tif -src mydemsrc1.tif -o outlet.shp -ord mydemord.tif -tree mydemtree.txt -coord mydemcoord.txt -net mydemnet.shp -w mydemw.tif")
  plot(raster("mydemord.tif"))
  zoom(raster("mydemord.tif"))
  plot(raster("mydemw.tif"))
@@ -368,7 +368,7 @@ if( ! grepl("~/src/TauDEM/bin",old_path)){
  zoom(z,ext=sl_zoom)
  
  # Pitremove
- system("mpiexec -n 16 pitremove -z sl_dem.tif -fel sldemfel.tif")
+ system("mpiexec -n 2 pitremove -z sl_dem.tif -fel sldemfel.tif")
  fel_sl=raster("sldemfel.tif")
  plot(fel_sl)
  plot(sl_bboxpts,add=T)
