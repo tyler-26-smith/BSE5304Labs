@@ -976,7 +976,6 @@ plot(DPLT_3$date,DPLT_3$LT, type="l",ylim=c(1,10),col="black", xlab="Date", ylab
 
 
 
-
 #########
 #Mapping#
 #########
